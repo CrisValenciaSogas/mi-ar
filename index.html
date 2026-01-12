@@ -9,10 +9,11 @@
   <body style="margin: 0px; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
       
-      <!-- Marcador .patt que subiste -->
-      <a-marker type="pattern" url="8M.patt">
+      <a-marker preset="hiro">
+   <a-box position='0 0.5 0' material='color: red;'></a-box>
+</a-marker>
         <!-- Video que subiste -->
-        <a-video src="GoEnhance_8M.mp4" width="1.6" height="0.9" position="0 0 0" rotation="-90 0 0" playsinline></a-video>
+        <a-video src="https://raw.githubusercontent.com/CrisValenciaSogas/mi-ar/refs/heads/main/8M.patt" width="1.6" height="0.9" position="0 0 0" rotation="-90 0 0" playsinline></a-video>
       </a-marker>
 
       
