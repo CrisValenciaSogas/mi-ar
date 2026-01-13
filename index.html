@@ -1,31 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Mi Experiencia RA</title>
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-</head>
-
-<body style="margin: 0px; overflow: hidden;">
-<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-
+<a-scene embedded arjs>
 <a-assets>
-<video id="miVideo" src="GoEnhance_8M.mp4" muted="true" playsinline autoplay loop></video>
+<video id="miVideo"
+src="GoEnhance_8M.mp4"
+muted="true"
+loop="true"
+playsinline>
+</video>
 </a-assets>
 
-<a-marker type="pattern" url="8M.patt">
-<a-video src="#miVideo" width="1.6" height="0.9" rotation="-90 0 0" position="0 0 0"></a-video>
+<a-marker type="pattern" url="8M.patt" id="marcador">
+<a-video src="#miVideo" width="1.6" height="0.9" rotation="-90 0 0"></a-video>
 </a-marker>
 
 <a-entity camera></a-entity>
 </a-scene>
 
 <script>
-// Lógica para que el video se reproduzca al tocar la pantalla (requisito de navegadores)
-window.addEventListener('click', function () {
-var v = document.querySelector('#miVideo');
-v.play();
+// Este es el "cerebro" que detecta la imagen
+var marcador = document.querySelector('#marcador');
+var video = document.querySelector('#miVideo');
+
+marcador.addEventListener('markerFound', function() {
+video.play(); // El vídeo empieza solo al ver la imagen
+});
+
+marcador.addEventListener('markerLost', function() {
+video.pause(); // El vídeo se para si dejas de enfocar (opcional)
 });
 </script>
-</body>
-</html>
