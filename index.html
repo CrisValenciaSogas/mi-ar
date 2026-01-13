@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Mi Obra AR</title>
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
@@ -21,14 +20,13 @@ webkit-playsinline>
 </video>
 </a-assets>
 
-<a-marker type="pattern" url="8M.patt" id="elMarcador">
+<a-marker type="pattern" url="8M.patt">
 
 <a-video src="#miVideo"
 width="1.6"
 height="0.9"
 position="0 0 0"
-rotation="-90 0 0"
-scale="1 1 1">
+rotation="-90 0 0">
 </a-video>
 
 </a-marker>
@@ -38,18 +36,13 @@ scale="1 1 1">
 </a-scene>
 
 <script>
-// Este trozo de código le dice al vídeo qué hacer
-var marcador = document.querySelector('#elMarcador');
+// Este pequeño código es el que hace que el vídeo empiece
+// en cuanto la cámara reconoce el dibujo.
 var video = document.querySelector('#miVideo');
+var marker = document.querySelector('a-marker');
 
-// Cuando la cámara ve el dibujo...
-marcador.addEventListener('markerFound', function() {
+marker.addEventListener('markerFound', function() {
 video.play();
-});
-
-// Cuando la cámara deja de ver el dibujo...
-marcador.addEventListener('markerLost', function() {
-video.pause();
 });
 </script>
 
