@@ -1,30 +1,57 @@
-<a-scene embedded arjs>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mi Obra AR</title>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
 <a-assets>
 <video id="miVideo"
 src="GoEnhance_8M.mp4"
 muted="true"
 loop="true"
-playsinline>
+playsinline
+webkit-playsinline>
 </video>
 </a-assets>
 
-<a-marker type="pattern" url="8M.patt" id="marcador">
-<a-video src="#miVideo" width="1.6" height="0.9" rotation="-90 0 0"></a-video>
+<a-marker type="pattern" url="8M.patt" id="elMarcador">
+
+<a-video src="#miVideo"
+width="1.6"
+height="0.9"
+position="0 0 0"
+rotation="-90 0 0"
+scale="1 1 1">
+</a-video>
+
 </a-marker>
 
 <a-entity camera></a-entity>
+
 </a-scene>
 
 <script>
-// Este es el "cerebro" que detecta la imagen
-var marcador = document.querySelector('#marcador');
+// Este trozo de código le dice al vídeo qué hacer
+var marcador = document.querySelector('#elMarcador');
 var video = document.querySelector('#miVideo');
 
+// Cuando la cámara ve el dibujo...
 marcador.addEventListener('markerFound', function() {
-video.play(); // El vídeo empieza solo al ver la imagen
+video.play();
 });
 
+// Cuando la cámara deja de ver el dibujo...
 marcador.addEventListener('markerLost', function() {
-video.pause(); // El vídeo se para si dejas de enfocar (opcional)
+video.pause();
 });
 </script>
+
+</body>
+</html>
