@@ -5,28 +5,41 @@
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-<a-scene mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+<body style="margin:0; overflow:hidden;">
+<a-scene mindar-image="imageTargetSrc: targets.mind; filterMinCF:0.001; filterBeta: 0.01;"
+vr-mode-ui="enabled: false"
+device-orientation-permission-ui="enabled: false">
+
 <a-assets>
-<video id="miVideo" src="8M.mp4" preload="auto" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
+<video id="v" src="8M.mp4"
+preload="auto"
+loop="true"
+muted="true"
+autoplay="true"
+playsinline
+webkit-playsinline
+crossorigin="anonymous">
+</video>
 </a-assets>
 
 <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
 <a-entity mindar-image-target="targetIndex: 0">
-<a-video src="#miVideo" width="1" height="0.7" position="0 0 0" scale="1.1 1.1 1.1"></a-video>
+<a-video src="#v" width="1" height="0.7" position="0 0 0"></a-video>
 </a-entity>
 </a-scene>
 
 <script>
-// Este script fuerza al vídeo a reproducirse en cuanto detecta la imagen
-const video = document.querySelector('#miVideo');
-const sceneEl = document.querySelector('a-scene');
-sceneEl.addEventListener("targetFound", () => {
+// Este script es un "arranque forzado" automático para móviles
+const video = document.querySelector("#v");
+
+// Intentar reproducir el vídeo constantemente hasta que lo consiga
+document.addEventListener('DOMContentLoaded', () => {
 video.play();
 });
-// Importante: Si se ve negro, haz un clic en la pantalla del móvil
-window.addEventListener("click", () => {
+
+const sceneEl = document.querySelector("a-scene");
+sceneEl.addEventListener("targetFound", () => {
 video.play();
 });
 </script>
