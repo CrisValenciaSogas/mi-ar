@@ -6,26 +6,35 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-   
+    
     <a-scene mindar-image="imageTargetSrc: ./maggie.mind; uiScanning: no; filterMinCF: 0.0001; filterBeta: 0.01; missTolerance: 1000;"
              vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-       
+        
         <a-assets>
-            <video id="v" src="./maggie.mp4" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
+            <video id="v" src="./maggie.mp4" loop="true" muted playsinline crossorigin="anonymous"></video>
         </a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <a-entity mindar-image-target="targetIndex: 0">
+        <a-entity id="maggie-target" mindar-image-target="targetIndex: 0">
             <a-video src="#v" width="1" height="1" position="0 0 0.05"></a-video>
         </a-entity>
     </a-scene>
 
     <script>
-        const v = document.querySelector('#v');
-        const sc = document.querySelector('a-scene');
-        sc.addEventListener("targetFound", () => { v.play(); });
-        sc.addEventListener("targetLost", () => { v.pause(); });
+        const video = document.querySelector('#v');
+        const target = document.querySelector('#maggie-target');
+
+        // El error estaba aquí: el evento se escucha en el 'target', no en la 'scene'
+        target.addEventListener("targetFound", () => {
+            console.log("Imagen encontrada");
+            video.play();
+        });
+
+        target.addEventListener("targetLost", () => {
+            console.log("Imagen perdida");
+            video.pause();
+        });
     </script>
 </body>
 </html>
