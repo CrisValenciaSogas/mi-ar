@@ -7,11 +7,10 @@
 </head>
 
 <body style="margin: 0; overflow: hidden;">
-<a-scene 
-    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.0001; filterBeta: 0.001;" 
-    vr-mode-ui="enabled: false" 
-    device-orientation-permission-ui="enabled: false">
-
+    
+<a-scene mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.00001; filterBeta: 0.0001; missTolerance: 1000;" 
+         vr-mode-ui="enabled: false" 
+         device-orientation-permission-ui="enabled: false">
 <a-assets>
 <video id="miVideo" src="GoEnhance_8M.mp4" loop="true" muted="true" playsinline></video>
 </a-assets>
