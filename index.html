@@ -6,21 +6,31 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-    <a-scene mindar-image="imageTargetSrc: maggie.mind; uiScanning: no;" 
+    
+    <a-scene mindar-image="imageTargetSrc: ./maggie.mind; uiScanning: no; filterMinCF: 0.0001; filterBeta: 0.001;" 
              vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        
         <a-assets>
-            <video id="v" src="maggie.mp4" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
+            <video id="v" src="./maggie.mp4" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
         </a-assets>
+
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
         <a-entity mindar-image-target="targetIndex: 0">
-            <a-video src="#v" width="1" height="1" position="0 0 0.01"></a-video>
+            <a-video src="#v" width="1" height="1" position="0 0 0.1"></a-video>
         </a-entity>
     </a-scene>
+
     <script>
         const v = document.querySelector('#v');
         const sc = document.querySelector('a-scene');
-        sc.addEventListener("targetFound", () => { v.play(); });
-        sc.addEventListener("targetLost", () => { v.pause(); });
+        sc.addEventListener("targetFound", () => {
+            console.log("¡Imagen detectada!");
+            v.play();
+        });
+        sc.addEventListener("targetLost", () => {
+            v.pause();
+        });
     </script>
 </body>
 </html>
