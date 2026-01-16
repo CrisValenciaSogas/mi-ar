@@ -1,44 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 </head>
+
 <body style="margin: 0; overflow: hidden;">
-    
-    <a-scene mindar-image="imageTargetSrc: maggie.mind; uiScanning: no;" 
-             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-        
-        <a-assets>
-            <video id="v" src="maggie.mp4" loop="true" muted playsinline crossorigin="anonymous"></video>
-        </a-assets>
+   
+<a-scene mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.00001; filterBeta: 0.0001; missTolerance: 1000;"
+         vr-mode-ui="enabled: false"
+         device-orientation-permission-ui="enabled: false">
+   
+<a-assets>
+<video id="miVideo" src="GoEnhance_8M.mp4" loop="true" muted="true" playsinline></video>
+</a-assets>
 
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <a-entity id="maggieTarget" mindar-image-target="targetIndex: 0">
-            <a-video src="#v" width="1" height="1" position="0 0 0"></a-video>
-        </a-entity>
-    </a-scene>
+<a-entity mindar-image-target="targetIndex: 0">
+<a-video src="#miVideo" width="1.1" height="1.56" position="0 0 0.01" scale="1 1 1"></a-video>
+</a-entity>
 
-    <script>
-        const video = document.querySelector('#v');
-        const target = document.querySelector('#maggieTarget');
+</a-scene>
 
-        // Esta es la forma más segura de lanzar el video en MindAR
-        target.addEventListener("targetFound", () => {
-            video.play();
-        });
+<script>
+// Este pequeño código obliga al vídeo a intentar arrancar
+const video = document.querySelector('#miVideo');
+const sceneEl = document.querySelector('a-scene');
 
-        target.addEventListener("targetLost", () => {
-            video.pause();
-        });
-
-        // Truco final: si el navegador bloquea el autoplay, 
-        // esto lo intenta reproducir al primer toque en la pantalla
-        window.addEventListener('click', () => {
-            video.play();
-        });
-    </script>
+sceneEl.addEventListener("targetFound", () => {
+video.play();
+});
+</script>
 </body>
 </html> 
