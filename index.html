@@ -9,7 +9,7 @@
 <body style="margin: 0; overflow: hidden;">
     
   <a-scene 
-    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.001; filterBeta: 500; missTolerance: 0; warmupTolerance: 5;"
+    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.001; filterBeta: 100; missTolerance: 0; warmupTolerance: 5;"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
     
@@ -33,7 +33,8 @@
         src="#miVideo" 
         width="1.1" 
         height="1.56" 
-        position="0 0 0"> </a-video>
+        position="0 0 0">
+      </a-video>
     </a-entity>
 
   </a-scene>
@@ -42,12 +43,10 @@
     const video = document.querySelector('#miVideo');
     const target = document.querySelector('#targetEnt');
 
-    // Detección precisa
     target.addEventListener("targetFound", () => {
         video.play();
     });
 
-    // Pausa inmediata: Al poner missTolerance a 0, este evento salta rapidísimo
     target.addEventListener("targetLost", () => {
         video.pause();
     });
