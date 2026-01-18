@@ -9,7 +9,7 @@
 <body style="margin: 0; overflow: hidden;">
     
   <a-scene 
-    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.001; filterBeta: 100; missTolerance: 0; warmupTolerance: 5;"
+    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.0005; filterBeta: 500; missTolerance: 0; warmupTolerance: 5;"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
     
@@ -43,10 +43,12 @@
     const video = document.querySelector('#miVideo');
     const target = document.querySelector('#targetEnt');
 
+    // Detección precisa
     target.addEventListener("targetFound", () => {
         video.play();
     });
 
+    // Pausa inmediata al perder el objetivo
     target.addEventListener("targetLost", () => {
         video.pause();
     });
