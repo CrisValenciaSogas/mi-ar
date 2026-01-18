@@ -9,7 +9,7 @@
 <body style="margin: 0; overflow: hidden;">
     
   <a-scene 
-    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.1; filterBeta: 10; missTolerance: 30;"
+    mindar-image="imageTargetSrc: targets.mind; uiScanning: no; filterMinCF: 0.001; filterBeta: 1000; missTolerance: 0; warmupTolerance: 5;"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
     
@@ -33,8 +33,7 @@
         src="#miVideo" 
         width="1.1" 
         height="1.56" 
-        position="0 0 0.1">
-      </a-video>
+        position="0 0 0"> </a-video>
     </a-entity>
 
   </a-scene>
@@ -43,22 +42,14 @@
     const video = document.querySelector('#miVideo');
     const target = document.querySelector('#targetEnt');
 
-    // OPTIMIZACIÓN 4: Truco de "arranque en frío"
-    // Esto carga el primer frame en memoria antes de encontrar el marcador
-    window.addEventListener('click', () => {
-        video.play();
-        video.pause();
-    }, {once: true});
-
-    // Control preciso de reproducción
+    // Detección precisa
     target.addEventListener("targetFound", () => {
         video.play();
     });
 
+    // Pausa inmediata: Al poner missTolerance a 0, este evento salta rapidísimo
     target.addEventListener("targetLost", () => {
         video.pause();
-        // Si quieres que el vídeo vuelva al inicio al perderse, descomenta la siguiente línea:
-        // video.currentTime = 0;
     });
   </script>
 </body>
